@@ -1,0 +1,5 @@
+export const APPEND_MESSAGE = 'CHAT/APPEND_MESSAGE';
+export const IS_TYPING = 'CHAT/IS_TYPING';
+export const JUST_JOINED = 'CHAT/JUST_JOINED';
+export const NOT_TYPING = 'CHAT/NOT_TYPING';
+export const LEAVE_CHAT = 'CHAT/LEAVE_CHAT';
