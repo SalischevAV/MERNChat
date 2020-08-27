@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux'
-import { AppendMessage, justJoined, isTyping, notTyping } from './redux/actions/chatActions';
+import { AppendMessage, justJoined, isTyping, notTyping, loadMessages } from './redux/actions/chatActions';
 import io from 'socket.io-client';
 import { store } from './redux/store';
 
@@ -31,6 +31,9 @@ function App(props) {
   useEffect(() => {
     socket.emit('online', { description: 'user._id: 1234567890' })
   }, []);
+  useEffect(()=>{
+    store.dispatch(loadMessages())
+  },[]);
 
   const handleTyping = () => {
     socket.emit('typing', {
@@ -73,7 +76,7 @@ function App(props) {
             return (
               <div key={index} className='row'>
                 <span><strong>{item.handle}:</strong></span>&nbsp;
-                <div>
+                <div className={index/2===0 ? "alert alert-primary ml-5" : "alert alert-secondary mr-5" }>
                   {item.message}
                 </div>
               </div>
@@ -94,7 +97,7 @@ function App(props) {
                   noMoreTyping();
                 }
               }} />
-              <input className='button-primary' type='submit' value='send' onClick={e => {
+              <input className='btn btn-primary' type='submit' value='send' onClick={e => {
                 e.preventDefault();
                 handleSubmit(handle, textArea);
                 setTextArea('');

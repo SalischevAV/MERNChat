@@ -1,5 +1,5 @@
 
-import {APPEND_MESSAGE, IS_TYPING, NOT_TYPING, JUST_JOINED, LEAVE_CHAT } from '../types';
+import {APPEND_MESSAGE, IS_TYPING, NOT_TYPING, JUST_JOINED, LOAD_MESSAGES} from '../types';
 
 const initialState={
     messages: [],
@@ -9,6 +9,11 @@ const initialState={
 
 const chatReducer = (state = initialState, action)=>{
     switch(action.type){
+        case LOAD_MESSAGES:
+            return{
+                ...state,
+                messages: action.payload,
+            }
         case APPEND_MESSAGE:
             return {
                 ...state,

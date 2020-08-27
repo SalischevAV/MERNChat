@@ -1,7 +1,11 @@
 const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-require('dotenv').config;
+const messageAPIcontroller = require('./Controller/messagesAPIcontroller');
+const bodyParser = require('body-parser')
+//require('dotenv').config;
+
+
 let clients = 0;
 
 
@@ -55,9 +59,16 @@ io.on('connect', socket => {
     })
 })
 
+app.use('/api/', bodyParser.urlencoded({extended: true}));
+app.use('/api/', bodyParser.json());
+
+app.route('/api/messages')
+.get(messageAPIcontroller.get)
+.post(messageAPIcontroller.post)
 
 server.listen(8080, (err) => {
     if (err) {
+        console.log('вниание: ' + err);
         throw new Error(err)
     } else {
         console.log('serever running')
